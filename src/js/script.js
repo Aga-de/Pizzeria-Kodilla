@@ -163,17 +163,17 @@
           const option = param.options[optionId];
           console.log(optionId, option);
           if (formData[paramId] && formData[paramId].includes(optionId)) {
-            if (option.default == false) {
-              price = price + option.price
+            if (!option.default == true) {
+              price = price + option.price;
             }
           } 
-            else {
-              if (option.default == true) {
-                price = price - option.price
-              }
+          else {
+            if (option.default == true) {
+              price = price - option.price;
             }
           }
         }
+      }
       //update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     } 
