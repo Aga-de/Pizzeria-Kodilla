@@ -277,7 +277,7 @@
   
         // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
         params[paramId] = {
-          name: param.label,
+          label: param.label,
           options: {}
         };
         //for every option in this category
@@ -287,7 +287,7 @@
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
           console.log(optionId, option);
           if (optionSelected) {
-            
+
             params[paramId].options[optionId] = option.label;
 
           } 
@@ -384,7 +384,12 @@
     getElements(element) {
       const thisCart = this;
 
-      thisCart.dom = {};
+      thisCart.dom = {
+        deliveryFee : select.cart.deliveryFee,
+        subtotalPrice : select.cart.subtotalPrice,
+        totalPrice : select.cart.totalPrice,
+        totalNumber : select.cart.totalNumber
+      };
 
       thisCart.dom.wrapper = element;
 
@@ -411,11 +416,94 @@
 
       thisCart.dom.productList.appendChild(generatedDOM);
 
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
 
+      
+      console.log('thisCart.products', thisCart.products);
 
       console.log('adding product', menuProduct);
+
+      thisCart.update();
     }
 
+    update() {
+      const thisCart = this;
+
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+
+      const totalNumber = 0;
+
+      const subtotalPrice = 0;
+
+      for (let product of thisCart.products) {
+        thisCart.totalNumber = totalNumber + product.amount;
+        thisCart.subtotalPrice = subtotalPrice + product.price;
+      }
+
+      if (thisCart.totalNumber > 0){
+        thisCart.deliveryFee = deliveryFee;
+      } else {
+        thisCart.deliveryFee = 0;
+      }
+
+      thisCart.totalPrice = thisCart.deliveryFee + thisCart.subtotalPrice;
+
+      console.log(deliveryFee);
+      console.log(thisCart.totalNumber);
+      console.log(thisCart.subtotalPrice);
+      console.log(thisCart.totalPrice);
+
+    }
+
+
+  }
+
+
+  class CartProduct {
+    constructor(menuProduct, element){
+
+      const thisCartProduct = this;
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.params = menuProduct.params;
+
+      thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
+
+      console.log('Cart Product:', thisCartProduct);   
+
+    }
+
+    getElements(element){
+      
+      const thisCartProduct = this;
+
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper =  element;
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+
+    }
+
+    initAmountWidget(){
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+
+      });
+
+    }
 
   }
 
