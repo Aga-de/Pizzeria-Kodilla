@@ -197,6 +197,7 @@
 
       //set price to default price
       let price = thisProduct.data.price;
+      thisProduct.priceSingle = thisProduct.data.price;
 
       //for every category (param)...
       for(let paramId in thisProduct.data.params){
@@ -232,7 +233,6 @@
       }
       //update calculated price in the HTML
       price *= thisProduct.amountWidget.value;
-      thisProduct.priceSingle = price;
       thisProduct.priceElem.innerHTML = price;
     }
     initAmountWidget() {
@@ -461,7 +461,7 @@
 
       for (let product of thisCart.products) {
         thisCart.totalNumber = thisCart.totalNumber + product.amount;
-        thisCart.subtotalPrice = thisCart.subtotalPrice + product.priceSingle;
+        thisCart.subtotalPrice = thisCart.subtotalPrice + product.price;
       }
 
       if (thisCart.totalNumber > 0){
@@ -574,6 +574,8 @@
       const thisCartProduct = this;
 
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+      thisCartProduct.amountWidget.input.value = thisCartProduct.amount;
+      thisCartProduct.amountWidget.value = thisCartProduct.amount;
 
       thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
