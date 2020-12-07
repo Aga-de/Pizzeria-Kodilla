@@ -518,8 +518,10 @@
 
       };
 
-      for(let prod of thisCart.products) {
-        payload.products.push(prod.getData());
+      console.log('payload',payload);
+
+      for(let thisCartProduct of thisCart.products) {
+        payload.products.push(thisCartProduct.getData());
       }
 
       const options = { 
@@ -530,7 +532,13 @@
         body: JSON.stringify(payload),
       };
 
-      fetch(url, options);
+      fetch(url, options)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+        });
 
     }
 
@@ -616,7 +624,7 @@
     getData(){
       const thisCartProduct = this;
 
-      return {
+      const productData = {
         id: thisCartProduct.id,
         name : thisCartProduct.name,
         params: thisCartProduct.params,
@@ -625,6 +633,7 @@
         price: thisCartProduct.price
       };
 
+      return productData;
 
     }
 
