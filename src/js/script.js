@@ -505,8 +505,6 @@
     sendOrder(){
       const thisCart = this;
 
-      const url = settings.db.url + '/' + settings.db.order;
-
       const payload = {
         adress: thisCart.dom.address.value,
         phone: thisCart.dom.phone.value,
@@ -523,6 +521,8 @@
       for(let thisCartProduct of thisCart.products) {
         payload.products.push(thisCartProduct.getData());
       }
+
+      const url = settings.db.url + '/' + settings.db.order;
 
       const options = { 
         method: 'POST',
