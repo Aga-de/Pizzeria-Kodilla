@@ -2,8 +2,10 @@ import {settings, select, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+import Home from './components/Home.js';
 
-const app = {
+
+export const app = {
   initPages: function() {
     const thisApp = this;
 
@@ -72,17 +74,14 @@ const app = {
   },
   init: function(){
     const thisApp = this;
-    // console.log('*** App starting ***');
-    // console.log('thisApp:', thisApp);
-    // console.log('classNames:', classNames);
-    // console.log('settings:', settings);
-    // console.log('templates:', templates);
-
+   
     thisApp.initPages();
 
     thisApp.initData();
 
     thisApp.initBooking();
+
+    thisApp.initHomePage();
 
   },
   initData: function() {
@@ -97,17 +96,12 @@ const app = {
         return rawResponse.json();
       })
       .then(function(parsedResponse){
-        // console.log('parsedResponse', parsedResponse);
         
-        /*save parsedResponse at thisApp.data.products*/
         thisApp.data.products = parsedResponse;
         
-        /*execute initMenu method */
         thisApp.initMenu();
 
       });
-
-    // console.log('thisApp.data', JSON.stringify(thisApp.data));
 
   },
 
@@ -126,12 +120,16 @@ const app = {
   },
 
   initBooking: function() {
-    const thisApp = this;
-    console.log(thisApp);
-
     const bookingContainer = document.querySelector(select.containerOf.booking);
 
     new Booking (bookingContainer);
+  },
+
+  initHomePage: function (){
+    const homeContainer = document.querySelector(select.containerOf.home);
+
+    new Home(homeContainer);
+
   }
 };
 

@@ -40,7 +40,6 @@ class Booking {
       ]
     };
 
-    //console.log('getData params', params);
 
     const urls = {
       booking:       settings.db.url + '/' + settings.db.booking + '?' + params.booking.join('&'),
@@ -48,7 +47,6 @@ class Booking {
       eventsRepeat:  settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat.join('&'),
     };
 
-    //console.log('getData urls', urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -67,9 +65,6 @@ class Booking {
 
       })
       .then(function([bookings, eventsCurrent, eventsRepeat]){
-        //console.log(bookings);
-        //console.log(eventsCurrent);
-        //console.log(eventsRepeat);
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
 
@@ -98,7 +93,6 @@ class Booking {
         }
       }
     }
-    //console.log('thisBooking.booked', thisBooking.booked);
     thisBooking.updateDOM();
   }
 
@@ -221,10 +215,8 @@ class Booking {
     thisBooking.hourPicker = new HourPicker (thisBooking.dom.hourPicker);
 
     thisBooking.dom.peopleAmount.addEventListener('click', function(){
-      //console.log('kliknięto');
     });
     thisBooking.dom.hoursAmount.addEventListener('click', function(){
-      //console.log('kliknięto');
     });
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){

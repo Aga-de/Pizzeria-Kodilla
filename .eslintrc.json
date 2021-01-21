@@ -32,6 +32,7 @@
     "globals": {
         "Handlebars": true,
         "rangeSlider": true,
-        "flatpickr": true
+        "flatpickr": true,
+        "flickity": true
       }
 }

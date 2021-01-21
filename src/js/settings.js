@@ -5,12 +5,14 @@ export const select = {
     menuProduct: '#template-menu-product',
     cartProduct: '#template-cart-product', // CODE ADDED
     bookingWidget: '#template-booking-widget',
+    home: '#template-home-page',
   },
   containerOf: {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
     booking: '.booking-wrapper',
+    home: '.home-wrapper',
   },
   all: {
     menuProducts: '#product-list > .product',
@@ -71,6 +73,14 @@ export const select = {
     address: '.order-confirmation [name="address"]',
     form: '.booking-form',
     button: '.order-confirmation button',
+
+  },
+  home: {
+    order: '.order_btn',
+    booking: '.booking_btn',
+    openingHours: '.openingHours',
+    carousel: '.carousel',
+    gallery: '.gallery',
 
   },
   nav: {
@@ -141,5 +151,5 @@ export const templates = {
   cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
   // CODE ADDED END
   bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
-    
+  homePage: Handlebars.compile(document.querySelector(select.templateOf.home).innerHTML),
 };
