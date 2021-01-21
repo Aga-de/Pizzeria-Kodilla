@@ -8,13 +8,10 @@ class Booking {
   constructor(element){
     const thisBooking = this;
     thisBooking.selectedTable = {};
-
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
     thisBooking.initTables();
-    
-
   }
 
   getData(){
@@ -40,13 +37,11 @@ class Booking {
       ]
     };
 
-
     const urls = {
       booking:       settings.db.url + '/' + settings.db.booking + '?' + params.booking.join('&'),
       eventsCurrent: settings.db.url + '/' + settings.db.event + '?' + params.eventsCurrent.join('&'),
       eventsRepeat:  settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat.join('&'),
     };
-
 
     Promise.all([
       fetch(urls.booking),
@@ -67,7 +62,6 @@ class Booking {
       .then(function([bookings, eventsCurrent, eventsRepeat]){
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
-
   }
 
   parseData(bookings, eventsCurrent, eventsRepeat) {
@@ -106,11 +100,9 @@ class Booking {
     const startHour = utils.hourToNumber(hour);
 
     for(let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5 ) {
-
       if(typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
-      }
-  
+      }  
       thisBooking.booked[date][hourBlock].push(table);
     }
   }
@@ -134,7 +126,6 @@ class Booking {
       if(!isNaN(tableId)) {
         tableId = parseInt(tableId);
       }
-
       if(
         !allAvailable
         &&
@@ -144,25 +135,19 @@ class Booking {
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
-
     }
   }
 
   initTables() {
-   
     const thisBooking = this;
 
     thisBooking.dom.floorPlan.addEventListener('click', function(event){
       
-
       const clickedElement = event.target;
 
       if (clickedElement.classList.contains('table')) {
-
-
         if (clickedElement.classList.contains('booked')) {
           alert('This table is already reserved.');
-
         } else {
           if (clickedElement.classList.contains('selected')) {
             clickedElement.classList.remove('selected');
@@ -175,7 +160,6 @@ class Booking {
               thisBooking.tableBooked = tableId;
             }
           }
-
         }
       }
     });
@@ -204,7 +188,6 @@ class Booking {
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
     thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
   }
-
 
   initWidgets() {
     const thisBooking = this;
@@ -269,9 +252,7 @@ class Booking {
       })
       .then(function (parsedResponse) {
         console.log('parsedResponse', parsedResponse);
-        //thisBooking.getData();
-      });
-  
+      }); 
   }
 }
 
