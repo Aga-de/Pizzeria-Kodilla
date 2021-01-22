@@ -233,3 +233,33 @@
     color: $color-main;
   }
 }
+
+/*Media*/
+@media (max-width: 767px) {
+
+  .main-carousel {
+    margin-top: 45px;
+  }
+
+  .carousel-cell {
+    display: flex;
+    flex-direction: column;
+
+    .carousel-img {
+      display: none;
+    }
+
+    .person {
+      font-size: 8px;
+
+    }
+  }
+
+  .gallery-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
